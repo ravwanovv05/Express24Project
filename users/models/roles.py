@@ -14,8 +14,8 @@ class Role(models.Model):
 
 
 class UserRole(models.Model):
-    user = models.OneToOneField('Пользователь', User, on_delete=models.CASCADE)
-    role = models.ForeignKey('Роль', Role, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    role = models.ForeignKey(Role, on_delete=models.CASCADE)
     created_at = models.DateTimeField('Создан')
 
     class Meta:

@@ -4,7 +4,7 @@ from django.db import models
 
 class Category(MPTTModel):
     title = models.CharField('Название', max_length=255)
-    parent = TreeForeignKey('Родитель', 'self', null=True, blank=True, on_delete=models.CASCADE)
+    parent = TreeForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
     created_at = models.DateTimeField('Создан', auto_now_add=True)
 
     class Meta:
