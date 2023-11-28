@@ -3,6 +3,8 @@ from express.models.categories import Category
 from express.models.products import Product, Picture
 from django.contrib.auth import get_user_model
 
+from users.models.roles import Role
+
 User = get_user_model()
 
 
@@ -31,4 +33,5 @@ class UserSerializer(ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'phone_number', 'role')
+        fields = ('id', 'first_name', 'last_name')
+

@@ -130,7 +130,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -148,9 +147,6 @@ STATIC_URL = 'static/'
 # media
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-
-AUTH_USER_MODEL = 'users.User'
 
 
 # Default primary key field type

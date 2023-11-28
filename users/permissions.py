@@ -6,7 +6,7 @@ class IsAdminPermission(BasePermission):
 
     def has_permission(self, request, view):
         try:
-            admin_role = UserRole.objects.get(user=request.user).role.name
+            admin_role = UserRole.objects.get(user=request.user).role.title
         except UserRole.DoesNotExist:
             return False
         return admin_role.lower() == 'admin'
