@@ -3,7 +3,9 @@ from django.db.models import Q
 from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from express.serializers import CategorySerializer, ProductSerializer, UserSerializer
+from express.models.products import ShoppingCart, Product
+from express.serializers import CategorySerializer, ProductSerializer, UserSerializer, ShoppingCartSerializer, \
+    UserRoleSerializer
 from users.models.roles import UserRole
 from users.permissions import IsAdminPermission
 
@@ -49,4 +51,38 @@ class UserGenericAPIView(GenericAPIView):
             new_list_data.append(data)
 
         return Response(new_list_data)
+
+
+class ApplicationGenericAPIView(GenericAPIView):
+    permission_classes = (IsAdminPermission, IsAuthenticated)
+    serializer_class = ShoppingCartSerializer
+
+    def get(self, request):
+        shopping_cart = ShoppingCart.objects.all()
+        serializer_shopping_cart = self.get_serializer(shopping_cart, many=True)
+        list_data = serializer_shopping_cart.data
+        new_list_data = []
+        for data in list_data:
+            first_name = User.objects.get(pk=data['user']).first_name
+            last_name = User.objects.get(pk=data['user']).last_name
+            data['full_name'] = f"{first_name} {last_name}"
+            data['title'] = Product.objects.get(pk=data['product']).title
+            data['price'] = Product.objects.get(pk=data['product']).price
+            data['total'] = data['count'] * Product.objects.get(pk=data['product']).price
+            new_list_data.append(data)
+        return Response(new_list_data)
+
+
+class UpdateDestroyUserRoleAPIView(GenericAPIView):
+    permission_classes = (IsAdminPermission, IsAuthenticated)
+    serializer_class = UserRoleSerializer
+
+    def patch(self, request, user):
+        print(request.data)
+        user_role = UserRole.objects.get(user=user)
+        serializer_user_role = self.get_serializer(user_role, request.data, partial=True)
+        serializer_user_role.is_valid(raise_exception=True)
+        serializer_user_role.save()
+        return Response(serializer_user_role.data)
+
 

@@ -3,7 +3,7 @@ from express.models.categories import Category
 from express.models.products import Product, ShoppingCart
 from django.contrib.auth import get_user_model
 
-from users.models.roles import Role
+from users.models.roles import Role, UserRole
 
 User = get_user_model()
 
@@ -39,3 +39,18 @@ class ShoppingCartSerializer(ModelSerializer):
     def create(self, validated_data):
         user = self.context['request'].user
         return ShoppingCart.objects.create(user=user, **validated_data)
+
+
+class IncrementDecrementSerializer(ModelSerializer):
+
+    class Meta:
+        model = ShoppingCart
+        fields = '__all__'
+        read_only_fields = ('user', 'product')
+
+
+class UserRoleSerializer(ModelSerializer):
+
+    class Meta:
+        model = UserRole
+        fields = ('role',)

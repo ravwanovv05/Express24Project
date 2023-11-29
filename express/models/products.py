@@ -33,3 +33,15 @@ class ShoppingCart(models.Model):
 
     def __str__(self):
         return f"{self.pk}"
+
+
+class CommentsToOrder(models.Model):
+    text = models.TextField('Комментарий', blank=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Комментарий'
+        verbose_name_plural = 'Комментарии'
+
+    def __str__(self):
+        return f"{self.pk}"
