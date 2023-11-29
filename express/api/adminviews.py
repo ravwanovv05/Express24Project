@@ -1,11 +1,11 @@
+from django.contrib.auth import get_user_model
 from django.db.models import Q
 from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from express.serializers import CategorySerializer, ProductSerializer, PictureSerializer, UserSerializer
+from express.serializers import CategorySerializer, ProductSerializer, UserSerializer
 from users.models.roles import UserRole
 from users.permissions import IsAdminPermission
-from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
@@ -30,17 +30,6 @@ class AddProductGenericAPIView(GenericAPIView):
         serializer_product.is_valid(raise_exception=True)
         serializer_product.save()
         return Response(serializer_product.data)
-
-
-class AddPictureGenericAPIView(GenericAPIView):
-    permission_classes = (IsAdminPermission, IsAuthenticated)
-    serializer_class = PictureSerializer
-
-    def post(self, request):
-        serializer_picture = self.get_serializer(data=request.data)
-        serializer_picture.is_valid(raise_exception=True)
-        serializer_picture.save()
-        return Response(serializer_picture.data)
 
 
 class UserGenericAPIView(GenericAPIView):

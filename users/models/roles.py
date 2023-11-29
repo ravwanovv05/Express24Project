@@ -16,7 +16,7 @@ class Role(models.Model):
 class UserRole(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     role = models.ForeignKey(Role, on_delete=models.CASCADE)
-    created_at = models.DateTimeField('Создан')
+    created_at = models.DateTimeField('Создан', auto_now_add=True)
 
     class Meta:
         verbose_name = 'Пользователь и роль'
