@@ -3,7 +3,7 @@ from django.db.models import Q
 from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from express.models.products import ShoppingCart, Product
+from express.models.products import ShoppingCart, Product, CommentToOrder
 from users.models.roles import UserRole
 from users.permissions import IsAdminPermission
 from express.serializers import (
@@ -70,6 +70,10 @@ class ApplicationGenericAPIView(GenericAPIView):
             data['full_name'] = f"{first_name} {last_name}"
             data['title'] = Product.objects.get(pk=data['product']).title
             data['price'] = Product.objects.get(pk=data['product']).price
+            try:
+                data['comment'] = CommentToOrder.objects.get(user=data['user']).text
+            except:
+                data['comment'] = None
             data['total'] = data['count'] * Product.objects.get(pk=data['product']).price
             new_list_data.append(data)
         return Response(new_list_data)
