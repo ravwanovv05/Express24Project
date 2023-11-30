@@ -4,8 +4,8 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from express.models.products import ShoppingCart, Product, CommentToOrder
-from users.models.roles import UserRole
-from users.permissions import IsAdminPermission
+from users.roles import UserRole
+from users.permissions import IsAdminPermission, IsCourierPermissions
 from express.serializers import (
     CategorySerializer, ProductSerializer, UserSerializer,
     ShoppingCartSerializer, UserRoleSerializer
@@ -57,7 +57,7 @@ class UserInfoGenericAPIView(GenericAPIView):
 
 class ApplicationGenericAPIView(GenericAPIView):
     permission_classes = (IsAdminPermission, IsAuthenticated)
-    serializer_class = ShoppingCartSerializer
+    serializer_class = ShoppingCartSerializer or IsCourierPermissions
 
     def get(self, request):
         shopping_cart = ShoppingCart.objects.all()

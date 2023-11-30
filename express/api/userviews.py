@@ -2,6 +2,8 @@ from django.db.models import Q
 from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.views import APIView
+
 from express.models.categories import Category
 from express.models.products import Product, ShoppingCart
 from express.serializers import CategorySerializer, ProductSerializer, ShoppingCartSerializer, CommentSerializer
@@ -69,7 +71,7 @@ class UpdateDestroyShoppingCartGenericAPIView(GenericAPIView):
         return Response(status=204)
 
 
-class IncrementShoppingCartGenericAPIVIew(GenericAPIView):
+class IncrementShoppingCartGenericAPIVIew(APIView):
     permission_classes = (IsAuthenticated,)
 
     def post(self, request, pk):
@@ -83,7 +85,7 @@ class IncrementShoppingCartGenericAPIVIew(GenericAPIView):
         return Response({"success": True, "message": "Successfully updated count!"}, status=200)
 
 
-class DecrementShoppingCartGenericAPIVIew(GenericAPIView):
+class DecrementShoppingCartGenericAPIVIew(APIView):
     permission_classes = (IsAuthenticated,)
 
     def post(self, request, pk):
