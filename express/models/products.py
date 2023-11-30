@@ -35,7 +35,7 @@ class ShoppingCart(models.Model):
         return f"{self.pk}"
 
 
-class CommentsToOrder(models.Model):
+class CommentToOrder(models.Model):
     text = models.TextField('Комментарий', blank=True, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
@@ -45,3 +45,4 @@ class CommentsToOrder(models.Model):
 
     def __str__(self):
         return f"{self.pk}"
+

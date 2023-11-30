@@ -4,10 +4,12 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from express.models.products import ShoppingCart, Product
-from express.serializers import CategorySerializer, ProductSerializer, UserSerializer, ShoppingCartSerializer, \
-    UserRoleSerializer
 from users.models.roles import UserRole
 from users.permissions import IsAdminPermission
+from express.serializers import (
+    CategorySerializer, ProductSerializer, UserSerializer,
+    ShoppingCartSerializer, UserRoleSerializer
+)
 
 User = get_user_model()
 
@@ -34,7 +36,7 @@ class AddProductGenericAPIView(GenericAPIView):
         return Response(serializer_product.data)
 
 
-class UserGenericAPIView(GenericAPIView):
+class UserInfoGenericAPIView(GenericAPIView):
     permission_classes = (IsAdminPermission, IsAuthenticated)
     serializer_class = UserSerializer
 
@@ -78,7 +80,6 @@ class UpdateDestroyUserRoleAPIView(GenericAPIView):
     serializer_class = UserRoleSerializer
 
     def patch(self, request, user):
-        print(request.data)
         user_role = UserRole.objects.get(user=user)
         serializer_user_role = self.get_serializer(user_role, request.data, partial=True)
         serializer_user_role.is_valid(raise_exception=True)
