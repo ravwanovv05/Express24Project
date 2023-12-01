@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework.generics import GenericAPIView
 from rest_framework.views import APIView
 from users.serializers import UserSerializer
-from rest_framework_simplejwt.tokens import AccessToken, RefreshToken
+from rest_framework_simplejwt.tokens import RefreshToken
 
 User = get_user_model()
 
@@ -39,11 +39,3 @@ class RegisterGenericAPIView(GenericAPIView):
         return Response(serializer_user.data)
 
 
-class LogOutAPIView(APIView):
-     permission_classes = (IsAuthenticated,)
-
-     def post(self, request):
-         refresh_token = request.data.get('refresh')
-         token = RefreshToken(refresh_token)
-         token.blacklist()
-         return Response(204)
