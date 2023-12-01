@@ -51,16 +51,8 @@ class ShoppingCartGenericAPIView(GenericAPIView):
         return Response(serializer_shopping_cart.data)
 
 
-class UpdateDestroyShoppingCartGenericAPIView(GenericAPIView):
+class UpdateDestroyShoppingCartGenericAPIView(APIView):
     permission_classes = (IsAuthenticated,)
-    serializer_class = ShoppingCartSerializer
-
-    def patch(self, request, pk):
-        shopping_cart = ShoppingCart.objects.get(pk=pk)
-        serializer_shopping_cart = self.get_serializer(shopping_cart, request.data, partial=True)
-        serializer_shopping_cart.is_valid(raise_exception=True)
-        serializer_shopping_cart.save()
-        return Response(serializer_shopping_cart.data)
 
     def delete(self, request, pk):
         shopping_cart = ShoppingCart.objects.get(pk=pk)
