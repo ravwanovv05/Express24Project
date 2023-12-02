@@ -106,4 +106,4 @@ class CommentGenericAPIView(GenericAPIView):
             serializer_comment.save()
             return Response(serializer_comment.data)
         except Exception as e:
-            return Response(status=404)
+            return Response({"message": str(e)}, status=404)
