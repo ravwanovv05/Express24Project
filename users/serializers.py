@@ -1,6 +1,5 @@
 from django.contrib.auth import get_user_model
-from rest_framework.serializers import ModelSerializer, CharField
-
+from rest_framework.serializers import ModelSerializer, Serializer, CharField
 User = get_user_model()
 
 
@@ -22,3 +21,10 @@ class UserSerializer(ModelSerializer):
             password=validated_data['password'],
         )
         return user
+
+
+class ChangePasswordSerializer(Serializer):
+    model = User
+
+    old_password = CharField(required=True)
+    new_password = CharField(required=True)
