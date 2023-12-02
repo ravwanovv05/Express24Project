@@ -1,12 +1,12 @@
 from django.db.models import Q
-from rest_framework.generics import GenericAPIView
+from rest_framework.generics import GenericAPIView, ListAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
 from express.models.categories import Category
 from express.models.products import Product, ShoppingCart
 from express.serializers import CategorySerializer, ProductSerializer, ShoppingCartSerializer, CommentSerializer
+from django.contrib.postgres.search import TrigramSimilarity
 
 
 class CategoryGenericAPIView(GenericAPIView):
@@ -107,3 +107,4 @@ class CommentGenericAPIView(GenericAPIView):
             return Response(serializer_comment.data)
         except Exception as e:
             return Response({"message": str(e)}, status=404)
+

@@ -2,7 +2,6 @@ from rest_framework.serializers import ModelSerializer
 from express.models.categories import Category
 from express.models.products import Product, ShoppingCart, CommentToOrder
 from django.contrib.auth import get_user_model
-
 from users.models.roles import UserRole
 
 User = get_user_model()
@@ -58,3 +57,4 @@ class CommentSerializer(ModelSerializer):
     def create(self, validated_data):
         user = self.context['request'].user
         return CommentToOrder.objects.create(user=user, **validated_data)
+
