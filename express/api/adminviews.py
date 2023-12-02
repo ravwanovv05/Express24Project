@@ -4,7 +4,7 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from express.models.products import ShoppingCart, Product, CommentToOrder
-from users.roles import UserRole
+from users.models.roles import UserRole
 from users.permissions import IsAdminPermission, IsCourierPermissions
 from express.serializers import (
     CategorySerializer, ProductSerializer, UserSerializer,

@@ -3,7 +3,7 @@ from express.models.categories import Category
 from express.models.products import Product, ShoppingCart, CommentToOrder
 from django.contrib.auth import get_user_model
 
-from users.roles import UserRole
+from users.models.roles import UserRole
 
 User = get_user_model()
 

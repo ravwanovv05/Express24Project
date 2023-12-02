@@ -1,5 +1,5 @@
 from rest_framework.permissions import BasePermission
-from users.roles import UserRole
+from users.models.roles import UserRole
 
 
 class IsAdminPermission(BasePermission):
