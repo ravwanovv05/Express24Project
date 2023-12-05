@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer
-from express.models.categories import Category
-from express.models.products import Product, ShoppingCart, CommentToOrder
+from express.models.models import Category
+from express.models.models import Product, ShoppingCart, CommentToOrder
 from django.contrib.auth import get_user_model
 from users.models.roles import UserRole
 

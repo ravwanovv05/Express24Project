@@ -3,7 +3,7 @@ from django.db.models import Q
 from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from express.models.products import ShoppingCart, Product, CommentToOrder
+from express.models.models import ShoppingCart, Product, CommentToOrder
 from users.models.roles import UserRole
 from users.permissions import IsAdminPermission, IsCourierPermissions
 from express.serializers import (

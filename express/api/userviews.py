@@ -3,8 +3,8 @@ from rest_framework.generics import GenericAPIView, ListAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from express.models.categories import Category
-from express.models.products import Product, ShoppingCart
+from express.models.models import Category
+from express.models.models import Product, ShoppingCart
 from express.serializers import CategorySerializer, ProductSerializer, ShoppingCartSerializer, CommentSerializer
 from django.contrib.postgres.search import TrigramSimilarity
 
