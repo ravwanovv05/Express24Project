@@ -1,12 +1,11 @@
-from django.contrib.auth import get_user_model
 from django.db.models import Q
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.generics import GenericAPIView, UpdateAPIView
-from users.serializers import UserSerializer, ChangePasswordSerializer
 
-User = get_user_model()
+from users.models.user_model import User
+from users.serializers import UserSerializer, ChangePasswordSerializer
 
 
 class RegisterGenericAPIView(GenericAPIView):

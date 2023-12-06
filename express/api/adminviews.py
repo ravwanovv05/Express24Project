@@ -1,22 +1,20 @@
-from django.contrib.auth import get_user_model
 from django.db.models import Q
 from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from express.models.models import ShoppingCart, Product, CommentToOrder
-from users.models.roles import UserRole
+from users.models import Role
+from users.models.user_model import UserRole, User
 from users.permissions import IsAdminPermission, IsCourierPermissions
 from express.serializers import (
-    CategorySerializer, ProductSerializer, UserSerializer,
-    ShoppingCartSerializer, UserRoleSerializer
+    AddCategorySerializer, ProductSerializer, UserSerializer,
+    ShoppingCartSerializer, UserRoleSerializer, AddUserRoleSerializer, RoleSerializer
 )
-
-User = get_user_model()
 
 
 class AddCategoryGenericAPIView(GenericAPIView):
     permission_classes = (IsAdminPermission, IsAuthenticated)
-    serializer_class = CategorySerializer
+    serializer_class = AddCategorySerializer
 
     def post(self, request):
         serializer_category = self.get_serializer(data=request.data)
@@ -91,3 +89,22 @@ class UpdateDestroyUserRoleAPIView(GenericAPIView):
         return Response(serializer_user_role.data)
 
 
+class RoleGenericAPIView(GenericAPIView):
+    permission_classes = (IsAdminPermission, IsAuthenticated)
+    serializer_class = RoleSerializer
+
+    def get(self, request):
+        roles = Role.objects.all().order_by('-created_at')
+        serializer = self.get_serializer(roles, many=True)
+        return Response(serializer.data)
+
+
+class UserRoleGenericAPIView(GenericAPIView):
+    permission_classes = (IsAdminPermission, IsAuthenticated)
+    serializer_class = AddUserRoleSerializer
+
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)

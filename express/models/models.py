@@ -1,8 +1,7 @@
-from django.contrib.auth import get_user_model
 from mptt.models import MPTTModel, TreeForeignKey
 from django.db import models
 
-User = get_user_model()
+from users.models.user_model import User
 
 
 class Category(MPTTModel):

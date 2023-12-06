@@ -1,10 +1,15 @@
 from rest_framework.serializers import ModelSerializer
 from express.models.models import Category
 from express.models.models import Product, ShoppingCart, CommentToOrder
-from django.contrib.auth import get_user_model
-from users.models.roles import UserRole
+from users.models import Role
+from users.models.user_model import UserRole, User
 
-User = get_user_model()
+
+class AddCategorySerializer(ModelSerializer):
+
+    class Meta:
+        model = Category
+        fields = ('title',)
 
 
 class CategorySerializer(ModelSerializer):
@@ -45,6 +50,20 @@ class UserRoleSerializer(ModelSerializer):
     class Meta:
         model = UserRole
         fields = ('role',)
+
+
+class AddUserRoleSerializer(ModelSerializer):
+
+    class Meta:
+        model = UserRole
+        fields = '__all__'
+
+
+class RoleSerializer(ModelSerializer):
+
+    class Meta:
+        model = Role
+        fields = '__all__'
 
 
 class CommentSerializer(ModelSerializer):
