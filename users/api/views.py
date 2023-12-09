@@ -3,6 +3,8 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.generics import GenericAPIView, UpdateAPIView
+from rest_framework.views import APIView
+from rest_framework_simplejwt.tokens import RefreshToken
 from users.models.user_model import User
 from users.serializers import UserSerializer, ChangePasswordSerializer
 
@@ -62,3 +64,17 @@ class ChangePasswordUpdateAPIView(UpdateAPIView):
             }
             return Response(response)
         return Response(serializer.errors, status=400)
+
+
+class LogoutAPIView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        try:
+            refresh_token = request.data["refresh_token"]
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+
+            return Response(status=status.HTTP_205_RESET_CONTENT)
+        except Exception as e:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
