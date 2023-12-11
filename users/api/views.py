@@ -21,13 +21,13 @@ class RegisterGenericAPIView(GenericAPIView):
             return Response({'success': False, 'message': 'Passwords are not same!'})
 
         try:
-            existing_user_username = User.objects.get(Q(username=username))
+            existing_user_username = User.objects.filter(Q(username=username))
             return Response({'success': False, 'message': 'This username already exists!'}, status=400)
         except User.DoesNotExist:
             pass
 
         try:
-            existing_user_email = User.objects.get(Q(email=email))
+            existing_user_email = User.objects.filter(Q(email=email))
             return Response({'success': False, 'message': 'This email already exists!'}, status=400)
         except User.DoesNotExist:
             pass
@@ -78,4 +78,3 @@ class LogoutAPIView(APIView):
             return Response(status=status.HTTP_205_RESET_CONTENT)
         except Exception as e:
             return Response(status=status.HTTP_400_BAD_REQUEST)
-
